@@ -3,9 +3,28 @@
 <img src="src/frontend/static/icons/Swagstore-Logo.svg" width="300" alt="Swagstore" />
 </p>
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Release 0.5.0 - multiarch (amd and arm support)](#release-050---multiarch-amd-and-arm-support)
+- [Dec 2022](#dec-2022)
+- [Screenshots](#screenshots)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Deploy Swagstore Demo app](#deploy-swagstore-demo-app)
+  - [Local Cluster](#local-cluster)
+    - [Cleanup](#cleanup)
+  - [Google Kubernetes Engine (GKE)](#google-kubernetes-engine-gke)
+  - [Azure Kubernetes Service (AKS)](#azure-kubernetes-service-aks)
+- [Local Development](#local-development)
+- [Demos featuring Online Boutique](#demos-featuring-online-boutique)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Release 0.5.0 - multiarch (amd and arm support)
 
-## Dec 2022
+### Dec 2022
 
 <!-- ![Continuous Integration](https://github.com/GoogleCloudPlatform/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg) -->
 
