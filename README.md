@@ -308,6 +308,28 @@ If you've deployed the application with `skaffold run` command, you can run
 
         kubectl get service frontend-external
 
+### Azure Kubernetes Service (AKS)
+
+1. Create an Azure Kubernetes Service cluster and make sure `kubectl` is pointing
+    to the cluster.
+
+2. Create an Azure Container registry and authenticate to it
+
+    ```sh
+    docker login kelnerhax.azurecr.io
+    ```
+
+3. In the root of this repository, run `skaffold run --default-repo=$REGISTRY_NAME.azurecr.io`,
+    where `$REGISTRY_NAME` is your Azure ACR.
+
+    This command:
+
+    - builds the container images
+    - pushes them to ACR
+    - applies the `./kubernetes-manifests` deploying the application to
+      Kubernetes.
+
+4. Find the IP address of your application, then visit the application on your
     browser to confirm installation.
 
         ```sh
