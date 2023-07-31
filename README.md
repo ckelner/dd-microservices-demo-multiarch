@@ -196,7 +196,7 @@ Don't forget to install Git, Skaffold 2.0+ and kubectl. Check the prerequisites 
 
 Launch a local Kubernetes cluster with one of the following tools:
 
-## Option 1 - Local Cluster
+### Local Cluster
 
 1. Launch a local Kubernetes cluster with one of the following tools:
 
@@ -249,12 +249,12 @@ Launch a local Kubernetes cluster with one of the following tools:
 `kubectl port-forward deployment/frontend 8080:8080` to forward a port to the frontend service.
 9. Navigate to either <http://localhost:80> or <http://localhost:8080> to access the web frontend.
 
-## Cleanup
+#### Cleanup
 
 If you've deployed the application with `skaffold run` command, you can run
 `skaffold delete` to clean up the deployed resources.
 
-## Option 2: Google Kubernetes Engine (GKE)
+### Google Kubernetes Engine (GKE)
 
 > 💡 Recommended if you're using Google Cloud Platform and want to try it on
 > a realistic cluster. **Note**: If your cluster has Workload Identity enabled,
