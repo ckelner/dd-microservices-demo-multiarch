@@ -8,7 +8,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Release 0.5.0 - multiarch (amd and arm support)](#release-050---multiarch-amd-and-arm-support)
-- [Dec 2022](#dec-2022)
+  - [Dec 2022](#dec-2022)
 - [Screenshots](#screenshots)
 - [Architecture](#architecture)
 - [Features](#features)
