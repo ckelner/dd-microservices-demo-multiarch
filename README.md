@@ -4,6 +4,7 @@
 </p>
 
 ## Release 0.5.0 - multiarch (amd and arm support)
+
 ## Dec 2022
 
 <!-- ![Continuous Integration](https://github.com/GoogleCloudPlatform/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg) -->
@@ -186,8 +187,7 @@ Find **Protocol Buffers Descriptions** at the [`./pb` directory](./pb).
 - **Synthetic Load Generation:** The application demo comes with a background
   job that creates realistic usage patterns on the website using
   [Locust](https://locust.io/) load generator.
-  
-  
+
 ## Deploy Swagstore Demo app
 
 Do you have a running K8s cluster? If not either use Docker Desktop or Minikube or Kind or your K8s cluster or your GKE
@@ -196,7 +196,7 @@ Don't forget to install Git, Skaffold 2.0+ and kubectl. Check the prerequisites 
 
 Launch a local Kubernetes cluster with one of the following tools:
 
-## Option 1 - Local Cluster 
+## Option 1 - Local Cluster
 
 1. Launch a local Kubernetes cluster with one of the following tools:
 
@@ -226,45 +226,41 @@ Launch a local Kubernetes cluster with one of the following tools:
 3. Run `skaffold run` (first time will be slow, it can take ~20 minutes).
    This will build and deploy the application. If you need to rebuild the images
    automatically as you refactor the code, run `skaffold dev` command.
-   
-   
-	**change the platform accordingly**
-	
-	**change the default-repo to point to your personal hub account
-	if you want to use your own images or you can use mine**
-	
-	if you are on Mac M1 or M2 or you are on arm use the --platform accordingly
 
-	  `skaffold run --default-repo docker.io/smazzone --platform=linux/arm64`
-	
-	if you are on a PC or an Intel-based Mac or you are on amd use the --platform accordingly
-  
+ **change the platform accordingly**
+
+ **change the default-repo to point to your personal hub account
+ if you want to use your own images or you can use mine**
+
+ if you are on Mac M1 or M2 or you are on arm use the --platform accordingly
+
+   `skaffold run --default-repo docker.io/smazzone --platform=linux/arm64`
+
+ if you are on a PC or an Intel-based Mac or you are on amd use the --platform accordingly
+
     `skaffold run --default-repo docker.io/smazzone --platform=linux/amd64`
-   
 
 4. Run `kubectl get pods` to verify the Pods are ready and running.
 
-5. Docker Desktop should automatically provide the frontend at http://localhost:80
+5. Docker Desktop should automatically provide the frontend at <http://localhost:80>
 6. Minikube requires you to run a command to access the frontend service:
 `minikube service frontend-external`
-7. Kind does not provision an IP address for the service. You must run a port-forwarding process to access the frontend at http://localhost:8080:
+7. Kind does not provision an IP address for the service. You must run a port-forwarding process to access the frontend at <http://localhost:8080>:
 `kubectl port-forward deployment/frontend 8080:8080` to forward a port to the frontend service.
-9. Navigate to either http://localhost:80 or http://localhost:8080 to access the web frontend.
-
+9. Navigate to either <http://localhost:80> or <http://localhost:8080> to access the web frontend.
 
 ## Cleanup
 
 If you've deployed the application with `skaffold run` command, you can run
 `skaffold delete` to clean up the deployed resources.
 
-  
 ## Option 2: Google Kubernetes Engine (GKE)
 
 > 💡 Recommended if you're using Google Cloud Platform and want to try it on
-> a realistic cluster. **Note**: If your cluster has Workload Identity enabled, 
+> a realistic cluster. **Note**: If your cluster has Workload Identity enabled,
 > [see these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable)
 
-1.  Create a Google Kubernetes Engine cluster and make sure `kubectl` is pointing
+1. Create a Google Kubernetes Engine cluster and make sure `kubectl` is pointing
     to the cluster.
 
     ```sh
@@ -280,7 +276,7 @@ If you've deployed the application with `skaffold run` command, you can run
     kubectl get nodes
     ```
 
-2.  Enable Google Container Registry (GCR) on your GCP project and configure the
+2. Enable Google Container Registry (GCR) on your GCP project and configure the
     `docker` CLI to authenticate to GCR:
 
     ```sh
@@ -291,7 +287,7 @@ If you've deployed the application with `skaffold run` command, you can run
     gcloud auth configure-docker -q
     ```
 
-3.  In the root of this repository, run `skaffold run --default-repo=gcr.io/[PROJECT_ID]`,
+3. In the root of this repository, run `skaffold run --default-repo=gcr.io/[PROJECT_ID]`,
     where [PROJECT_ID] is your GCP project ID.
 
     This command:
@@ -307,10 +303,16 @@ If you've deployed the application with `skaffold run` command, you can run
     API](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com),
     then run `skaffold run -p gcb --default-repo=gcr.io/[PROJECT_ID]` instead.
 
-4.  Find the IP address of your application, then visit the application on your
+4. Find the IP address of your application, then visit the application on your
     browser to confirm installation.
 
         kubectl get service frontend-external
+
+    browser to confirm installation.
+
+        ```sh
+        kubectl get service frontend-external
+        ```
 
 ## Local Development
 
