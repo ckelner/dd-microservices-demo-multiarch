@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FROM golang:1.19.4-alpine AS builder
-FROM --platform=$BUILDPLATFORM golang:1.19.4-alpine AS builder
+FROM golang:1.19.4-alpine AS builder
+# FROM --platform=$BUILDPLATFORM golang:1.19.4-alpine AS builder
 RUN apk add --no-cache ca-certificates git
 RUN apk add build-base
 
@@ -23,9 +23,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-# ARG BUILDOS 
+# ARG BUILDOS
 # ARG BUILDARCH
-ARG TARGETOS 
+ARG TARGETOS
 ARG TARGETARCH
 # RUN echo ${BUILDOS}
 # RUN echo ${BUILDARCH}
@@ -57,7 +57,7 @@ FROM without-grpc-health-probe-bin
 #     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
 #     chmod +x /bin/grpc_health_probe
 
-ARG TARGETOS 
+ARG TARGETOS
 ARG TARGETARCH
 RUN echo ${TARGETOS}
 RUN echo ${TARGETARCH}

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FROM golang:1.19.4-alpine@sha256:f33331e12ca70192c0dbab2d0a74a52e1dd344221507d88aaea605b0219a212f as builder
-FROM --platform=$BUILDPLATFORM golang:1.19.4-alpine as builder
+FROM golang:1.19.4-alpine@sha256:f33331e12ca70192c0dbab2d0a74a52e1dd344221507d88aaea605b0219a212f as builder
+# FROM --platform=$BUILDPLATFORM golang:1.19.4-alpine as builder
 RUN apk add --no-cache ca-certificates git
 RUN apk add build-base
 WORKDIR /src
@@ -23,9 +23,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-# ARG BUILDOS 
+# ARG BUILDOS
 # ARG BUILDARCH
-ARG TARGETOS 
+ARG TARGETOS
 ARG TARGETARCH
 # RUN echo ${BUILDOS}
 # RUN echo ${BUILDARCH}
@@ -54,7 +54,7 @@ ENTRYPOINT ["/src/shippingservice"]
 FROM without-grpc-health-probe-bin
 
 
-ARG TARGETOS 
+ARG TARGETOS
 ARG TARGETARCH
 RUN echo ${TARGETOS}
 RUN echo ${TARGETARCH}

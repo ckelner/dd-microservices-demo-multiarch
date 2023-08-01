@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FROM node:19.3.0-alpine@sha256:d0b02b1ec5534efb43a926069915c982aec745a8eb0611ebcffc4cafaa4e4a74 as base
-
-# FROM base as builder
-
-FROM --platform=$BUILDPLATFORM node:19.3.0-alpine as base
-
-FROM --platform=$BUILDPLATFORM base as builder
+FROM node:19.3.0-alpine@sha256:d0b02b1ec5534efb43a926069915c982aec745a8eb0611ebcffc4cafaa4e4a74 as base
+FROM base as builder
+# FROM --platform=$BUILDPLATFORM node:19.3.0-alpine as base
+# FROM --platform=$BUILDPLATFORM base as builder
 
 # Some packages (e.g. @google-cloud/profiler) require additional
 # deps for post-install scripts
@@ -52,7 +49,7 @@ FROM without-grpc-health-probe-bin
 #     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
 #     chmod +x /bin/grpc_health_probe
 
-ARG TARGETOS 
+ARG TARGETOS
 ARG TARGETARCH
 RUN echo ${TARGETOS}
 RUN echo ${TARGETARCH}
