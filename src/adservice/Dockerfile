@@ -29,9 +29,9 @@ RUN ./gradlew installDist
 FROM eclipse-temurin:19.0.1_10-jre-alpine@sha256:1aa167ab4f1498130e04bed5d6a83fed23c1fd8e3df8589723bc876770dd6a3a as without-grpc-health-probe-bin
 # FROM eclipse-temurin:19.0.1_10-jre-jammy as without-grpc-health-probe-bin
 
-RUN apt-get -y update && apt-get install -qqy \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get -y update && apt-get install -qqy \
+#     wget \
+#     && rm -rf /var/lib/apt/lists/*
 
 # RUN apk add --no-cache ca-certificates
 
