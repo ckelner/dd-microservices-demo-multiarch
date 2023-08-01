@@ -325,7 +325,9 @@ If you've deployed the application with `skaffold run` command, you can run
 4. Find the IP address of your application, then visit the application on your
     browser to confirm installation.
 
-        kubectl get service frontend-external
+    ```sh
+    kubectl get service frontend-external
+    ```
 
 ### Azure Kubernetes Service (AKS)
 
@@ -351,9 +353,9 @@ If you've deployed the application with `skaffold run` command, you can run
 4. Find the IP address of your application, then visit the application on your
     browser to confirm installation.
 
-        ```sh
-        kubectl get service frontend-external
-        ```
+    ```sh
+    kubectl get service frontend-external
+    ```
 
 ## Local Development
 
