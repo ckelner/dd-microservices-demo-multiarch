@@ -13,27 +13,25 @@
 # limitations under the License.
 
 # https://mcr.microsoft.com/v2/dotnet/sdk/tags/list
-FROM --platform=$BUILDPLATFORM  mcr.microsoft.com/dotnet/sdk:7.0.306-jammy as builder
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:7.0.306-jammy as build
+
 WORKDIR /app
-COPY cartservice.csproj .
-RUN dotnet restore cartservice.csproj -r linux-musl-x64
 COPY . .
-RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true -r linux-musl-x64 --self-contained false -p:PublishTrimmed=True -p:TrimMode=Link -c release -o /cartservice --no-restore
+RUN dotnet restore cartservice.csproj
+RUN dotnet publish cartservice.csproj -o /out
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
 # Building final image used in running container
-FROM --platform=$BUILDPLATFORM  mcr.microsoft.com/dotnet/aspnet:7.0.9-jammy AS final
-# Installing procps on the container to enable debugging of .NET Core
-RUN apt-get update \
-    && apt-get install -y unzip procps wget
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/aspnet:7.0.9-jammy AS final
+
+RUN apt-get update && apt-get install -y wget
 # renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.14 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
+
 WORKDIR /app
-COPY --from=builder /cartservice .
-EXPOSE 7070
-ENV DOTNET_EnableDiagnostics=0 \
-    ASPNETCORE_URLS=http://*:7070
-USER 1000
-ENTRYPOINT ["/app/cartservice"]
+COPY --from=build /out .
+ENV ASPNETCORE_URLS=http://*:7070
+
+ENTRYPOINT ["dotnet", "cartservice.dll"]
