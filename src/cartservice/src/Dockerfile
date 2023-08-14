@@ -53,6 +53,6 @@ ENV DOTNET_EnableDiagnostics=0 \
     ASPNETCORE_URLS=http://*:7070
 USER 1000
 
-RUN chmod +x cartservice
+RUN chmod +x /app/cartservice
 
 ENTRYPOINT ["/app/cartservice"]
