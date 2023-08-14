@@ -27,14 +27,20 @@ COPY cartservice.csproj .
 # but we also need some protos, I don't know why...
 # COPY ./protos/Cart.proto ./protos/Cart.proto
 # RUN dotnet publish cartservice.csproj -o /out
-RUN dotnet restore cartservice.csproj -a $TARGETARCH
+# RUN dotnet restore cartservice.csproj -a $TARGETARCH
+RUN dotnet restore cartservice.csproj -r linux-musl-x64
 COPY . .
-RUN dotnet publish cartservice.csproj -a $TARGETARCH -o /out --no-restore
+# RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true \
+#     --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link \
+#     -a $TARGETARCH -c release -o /out --no-restore
+RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true \
+    --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link \
+    -r linux-musl-x64 -c release -o /out --no-restore
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 # Building final image used in running container
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-jammy AS final
 
 ARG \
     TARGETPLATFORM \
