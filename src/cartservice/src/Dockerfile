@@ -38,7 +38,7 @@ COPY . .
 #     --self-contained true -p:PublishTrimmed=True -p:TrimMode=Link \
 #     -a $TARGETARCH -c release -o /out --no-restore
 RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true \
-    --self-contained false -r linux-musl-x64 -c Release -o /out
+    --self-contained false -r linux-musl-x64 -c Release -o /cartservice
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
@@ -59,7 +59,7 @@ ARG CACHE_DATE=2016-01-01
 #     chmod +x /bin/grpc_health_probe
 
 WORKDIR /app
-COPY --from=build --chmod=0755 /out .
+COPY --from=build --chmod=0755 /cartservice .
 EXPOSE 7070
 ENV DOTNET_EnableDiagnostics=0 \
     ASPNETCORE_URLS=http://*:7070
@@ -67,4 +67,4 @@ ENV DOTNET_EnableDiagnostics=0 \
 
 # RUN chmod +x /app/cartservice
 
-ENTRYPOINT ["cartservice"]
+ENTRYPOINT ["/app/cartservice"]
