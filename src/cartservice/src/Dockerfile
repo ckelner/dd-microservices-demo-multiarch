@@ -43,8 +43,9 @@ RUN dotnet publish cartservice.csproj -p:PublishSingleFile=true \
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
 # https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
+# https://hub.docker.com/_/microsoft-dotnet-runtime/
 # Building final image used in running container
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-preview-jammy AS final
+FROM mcr.microsoft.com/dotnet/runtime:8.0-preview-jammy AS final
 
 ARG \
     TARGETPLATFORM \
@@ -59,11 +60,11 @@ ARG CACHE_DATE=2016-01-01
 #     chmod +x /bin/grpc_health_probe
 
 WORKDIR /app
-COPY --from=build /out .
+COPY --from=build --chown=root:root /out/* .
 EXPOSE 7070
 ENV DOTNET_EnableDiagnostics=0 \
     ASPNETCORE_URLS=http://*:7070
-USER 1000
+# USER 1000
 
 # RUN chmod +x /app/cartservice
 

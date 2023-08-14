@@ -41,7 +41,7 @@ build:
       docker:
         dockerfile: Dockerfile
         buildArgs:
-          CACHE_DATE: "{{ $CACHE_DATE }}"
+          CACHE_DATE: '{{ default "2016-01-01" .CACHE_DATE }}'
     - image: frontend
       context: src/frontend
     - image: adservice
