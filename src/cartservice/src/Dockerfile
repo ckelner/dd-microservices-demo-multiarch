@@ -32,22 +32,26 @@ COPY . .
 RUN dotnet publish cartservice.csproj -a $TARGETARCH -o /out --no-restore
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
+# https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list
 # Building final image used in running container
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0.0-preview.7-jammy AS final
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-preview-jammy AS final
 
 ARG \
     TARGETPLATFORM \
     BUILDPLATFORM
 
-RUN apt-get update && apt-get install -y wget
-# renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
-RUN GRPC_HEALTH_PROBE_VERSION=v0.4.14 && \
-    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-    chmod +x /bin/grpc_health_probe
+# RUN apt-get update && apt-get install -y wget
+# # renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
+# RUN GRPC_HEALTH_PROBE_VERSION=v0.4.14 && \
+#     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+#     chmod +x /bin/grpc_health_probe
 
 WORKDIR /app
 COPY --from=build /out .
-ENV ASPNETCORE_URLS=http://*:7070
+EXPOSE 7070
+ENV DOTNET_EnableDiagnostics=0 \
+    ASPNETCORE_URLS=http://*:7070
+USER 1000
 
 RUN chmod +x cartservice
 
