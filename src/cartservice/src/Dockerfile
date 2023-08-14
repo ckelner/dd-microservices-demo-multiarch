@@ -13,16 +13,31 @@
 # limitations under the License.
 
 # https://mcr.microsoft.com/v2/dotnet/sdk/tags/list
-FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:7.0.306-jammy as build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-preview-jammy as build
 
+ARG \
+    TARGETPLATFORM \
+    TARGETARCH \
+    BUILDPLATFORM
 WORKDIR /app
+# takes too long to run
+# COPY . .
+COPY cartservice.csproj .
+# RUN dotnet restore cartservice.csproj
+# but we also need some protos, I don't know why...
+# COPY ./protos/Cart.proto ./protos/Cart.proto
+# RUN dotnet publish cartservice.csproj -o /out
+RUN dotnet restore cartservice.csproj -a $TARGETARCH
 COPY . .
-RUN dotnet restore cartservice.csproj
-RUN dotnet publish cartservice.csproj -o /out
+RUN dotnet publish cartservice.csproj -a $TARGETARCH -o /out --no-restore
 
 # https://mcr.microsoft.com/v2/dotnet/aspnet/tags/list
 # Building final image used in running container
-FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/aspnet:7.0.9-jammy AS final
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0.0-preview.7-jammy AS final
+
+ARG \
+    TARGETPLATFORM \
+    BUILDPLATFORM
 
 RUN apt-get update && apt-get install -y wget
 # renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
@@ -34,4 +49,6 @@ WORKDIR /app
 COPY --from=build /out .
 ENV ASPNETCORE_URLS=http://*:7070
 
-ENTRYPOINT ["dotnet", "cartservice.dll"]
+RUN chmod +x cartservice
+
+ENTRYPOINT ["/app/cartservice"]
