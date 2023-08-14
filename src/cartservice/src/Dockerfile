@@ -19,9 +19,13 @@ ARG \
     TARGETPLATFORM \
     TARGETARCH \
     BUILDPLATFORM
+
+ARG CACHE_DATE=2016-01-01
+
 WORKDIR /app
 # takes too long to run
 # COPY . .
+
 COPY cartservice.csproj .
 # RUN dotnet restore cartservice.csproj
 # but we also need some protos, I don't know why...
@@ -46,6 +50,8 @@ ARG \
     TARGETPLATFORM \
     BUILDPLATFORM
 
+ARG CACHE_DATE=2016-01-01
+
 # RUN apt-get update && apt-get install -y wget
 # # renovate: datasource=github-releases depName=grpc-ecosystem/grpc-health-probe
 # RUN GRPC_HEALTH_PROBE_VERSION=v0.4.14 && \
@@ -59,6 +65,6 @@ ENV DOTNET_EnableDiagnostics=0 \
     ASPNETCORE_URLS=http://*:7070
 USER 1000
 
-RUN chmod +x /app/cartservice
+# RUN chmod +x /app/cartservice
 
 ENTRYPOINT ["/app/cartservice"]
